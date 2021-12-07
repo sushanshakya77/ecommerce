@@ -16,15 +16,6 @@ export class UserService {
     username: string,
     password: string
   ): Promise<Register> {
-    if (!(fullname && email && username && password)) {
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: 'all input is required',
-        },
-        HttpStatus.FORBIDDEN
-      );
-    }
     const oldUser = await this.registerRespository.findOne({ username });
     // console.log(oldUser);
     if (oldUser) {

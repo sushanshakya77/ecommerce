@@ -46,7 +46,7 @@ function Register() {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data: any) =>
     axios
-      .post('/api/user/register')
+      .post('/api/user/register', data)
       .then((response: any) => console.log(response));
 
   return (
