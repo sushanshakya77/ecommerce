@@ -43,7 +43,8 @@
       "executor": "@nrwl/web:dev-server",
       "options": {
         "buildTarget": "ecommerce:build",
-        "hmr": true
+        "hmr": true,
+        "proxyConfig": "apps/ecommerce/proxy.conf.json"
       },
       "configurations": {
         "production": {
