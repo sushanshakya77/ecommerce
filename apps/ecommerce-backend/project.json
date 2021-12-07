@@ -1,0 +1,52 @@
+{
+  "root": "apps/ecommerce-backend",
+  "sourceRoot": "apps/ecommerce-backend/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:build",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ecommerce-backend",
+        "main": "apps/ecommerce-backend/src/main.ts",
+        "tsConfig": "apps/ecommerce-backend/tsconfig.app.json",
+        "assets": ["apps/ecommerce-backend/src/assets"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "apps/ecommerce-backend/src/environments/environment.ts",
+              "with": "apps/ecommerce-backend/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:execute",
+      "options": {
+        "buildTarget": "ecommerce-backend:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/ecommerce-backend/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/apps/ecommerce-backend"],
+      "options": {
+        "jestConfig": "apps/ecommerce-backend/jest.config.js",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}
