@@ -101,7 +101,11 @@ function Login() {
                 <Button
                   type="submit"
                   variant="contained"
-                  style={{ width: '70%', marginTop: '25px' }}
+                  style={{
+                    width: '70%',
+                    marginTop: '25px',
+                    backgroundColor: '#0067ff',
+                  }}
                 >
                   Login
                 </Button>

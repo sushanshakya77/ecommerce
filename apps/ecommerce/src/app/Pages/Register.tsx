@@ -46,7 +46,7 @@ function Register() {
   } = useForm<Inputs>();
   const onSubmit: SubmitHandler<Inputs> = (data: any) =>
     axios
-      .post('/api/user/register', data)
+      .post('/api/auth/register', data)
       .then((response: any) => console.log(response));
 
   return (
@@ -71,14 +71,14 @@ function Register() {
           position: 'relative',
         }}
       >
-        <Container elevation={8} sx={{ backgroundColor: '#f1e7f0' }}>
+        <Container elevation={8}>
           <CusTitle>Register</CusTitle>
           <form onSubmit={handleSubmit(onSubmit)}>
             {/* <CusLabel> Username </CusLabel> */}
             <div>
               <TextField
                 label="Fullname"
-                style={{ width: '70%', marginTop: '10px' }}
+                sx={{ width: '70%', marginTop: '10px' }}
                 error={!!errors.fullname}
                 helperText={errors.fullname?.message}
                 {...register('fullname', {
@@ -87,7 +87,7 @@ function Register() {
               ></TextField>
               <TextField
                 label="Email"
-                style={{ width: '70%', marginTop: '30px' }}
+                sx={{ width: '70%', marginTop: '30px' }}
                 error={!!errors.email}
                 helperText={errors.email?.message}
                 {...register('email', {
@@ -96,7 +96,7 @@ function Register() {
               ></TextField>
               <TextField
                 label="Username"
-                style={{ width: '70%', marginTop: '30px' }}
+                sx={{ width: '70%', marginTop: '30px' }}
                 error={!!errors.username}
                 helperText={errors.username?.message}
                 {...register('username', {
@@ -106,7 +106,7 @@ function Register() {
               <TextField
                 label="Password"
                 type="password"
-                style={{ width: '70%', marginTop: '30px' }}
+                sx={{ width: '70%', marginTop: '30px' }}
                 error={!!errors.password}
                 helperText={errors.password?.message}
                 {...register('password', {
