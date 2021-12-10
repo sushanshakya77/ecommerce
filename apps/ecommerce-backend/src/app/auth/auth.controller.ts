@@ -6,11 +6,12 @@ import {
   Get,
   Post,
   Req,
+  Res,
   Session,
   UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { Request } from 'express';
+import { Request, Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { JwtAuthGuard } from './guards/jwt.guard';
 
@@ -45,10 +46,25 @@ export class AuthController {
   @UseGuards(AuthGuard('jwt-refresh'))
   @Post('refreshtoken')
   refreshToken(@Req() request: Request) {
-    const user = request.body as IUser;
+    const user = request.user as IUser;
     const refreshtoken = request.session.refreshToken;
     if (!refreshtoken) throw new BadRequestException('Not authenticated');
 
+    // console.log('inside controller');
+    // console.log(user);
+    // console.log(refreshtoken);
+
     return this.authService.refreshToken(user.username, refreshtoken);
+  }
+
+  @UseGuards(AuthGuard('jwt-access'))
+  @Post('logout')
+  logout(@Req() req: Request, @Res() res: Response) {
+    req.session.destroy((error) => {
+      if (error) {
+        console.log(error);
+        return res.send(error);
+      } else return res.json('Logged Out');
+    });
   }
 }

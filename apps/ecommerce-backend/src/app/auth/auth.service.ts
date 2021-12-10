@@ -76,6 +76,9 @@ export class AuthService {
 
   async refreshToken(username: string, refreshToken: string) {
     const oldUser = await this.registerRepository.findOne({ username });
+
+    // console.log('inside service');
+    // console.log(oldUser);
     if (!oldUser) throw new BadRequestException('doesnt exist');
     const newtoken = await this.createToken(username);
 

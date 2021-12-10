@@ -1,24 +1,15 @@
 import { AddShoppingCart, FavoriteBorder, MoreVert } from '@mui/icons-material';
 import {
-  Button,
   Card,
   CardActions,
   CardContent,
   CardMedia,
-  CircularProgress,
   Grid,
   IconButton,
-  Rating,
   Typography,
 } from '@mui/material';
-import styled from '@emotion/styled';
-import React from 'react';
+import { Link, useParams } from 'react-router-dom';
 import useSWR from 'swr';
-import Banner from '../Components/Banner';
-import { Link } from 'react-router-dom';
-
-const fetcher = (...args: Parameters<typeof fetch>) =>
-  fetch(...args).then((response) => response.json());
 
 interface IProducts {
   id: string;
@@ -29,16 +20,20 @@ interface IProducts {
   image: string;
   rating: any;
 }
+const fetcher = (...args: Parameters<typeof fetch>) =>
+  fetch(...args).then((response) => response.json());
 
-function Home() {
-  const { data, error } = useSWR('https://fakestoreapi.com/products', fetcher);
+function Category() {
+  const { category } = useParams();
+  const { data, error } = useSWR(
+    `https://fakestoreapi.com/products/category/${category}`,
+    fetcher
+  );
   console.log(data);
   if (error) return <div>failed to load</div>;
-  if (!data) return <CircularProgress color="secondary" />;
-
+  if (!data) return <div>loading...</div>;
   return (
     <div>
-      <Banner />
       <div style={{ display: 'flex' }}>
         <Typography variant="h3" sx={{ margin: 'auto', marginTop: '20px' }}>
           Featured Products
@@ -106,15 +101,7 @@ function Home() {
                       Price: ${products.price}
                     </Typography>
                     <Typography variant="subtitle1" color="text.secondary">
-                      Rating:
-                      <Rating
-                        name="read-only"
-                        defaultValue={products.rating.rate}
-                        precision={0.5}
-                        readOnly
-                        size="small"
-                      />
-                      {products.rating.rate}
+                      Rating: {products.rating.rate}
                     </Typography>
                   </CardContent>
                 </Link>
@@ -139,4 +126,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Category;

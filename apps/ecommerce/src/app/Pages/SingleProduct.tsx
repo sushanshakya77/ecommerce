@@ -1,4 +1,12 @@
-import { Card, Container, Typography } from '@mui/material';
+import { AddShoppingCartOutlined } from '@mui/icons-material';
+import {
+  Button,
+  Card,
+  Container,
+  IconButton,
+  Rating,
+  Typography,
+} from '@mui/material';
 import React from 'react';
 import { useParams } from 'react-router';
 import useSWR from 'swr';
@@ -29,6 +37,13 @@ function SingleProduct() {
           <Typography variant="h4" sx={{ width: '500px', marginTop: '20px' }}>
             {data.title}
           </Typography>
+          <Rating
+            name="read-only"
+            defaultValue={data.rating.rate}
+            precision={0.5}
+            readOnly
+          />
+
           <Typography variant="h6" sx={{ width: '500px', marginTop: '2px' }}>
             Rating: {data.rating.rate}
           </Typography>
@@ -44,6 +59,8 @@ function SingleProduct() {
           <Typography variant="h6" sx={{ width: '500px', marginTop: '20px' }}>
             Category: {data.category}
           </Typography>
+
+          <Button>Add To Cart</Button>
         </div>
       </Container>
     </div>

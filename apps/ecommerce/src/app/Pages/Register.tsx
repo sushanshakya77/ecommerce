@@ -3,6 +3,8 @@ import { styled } from '@mui/material/styles';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import React from 'react';
 import axios from 'axios';
+import { Navigate } from 'react-router';
+import { useAuthentication } from '../UseAuthentication/UseAuthentication';
 
 const Container = styled(Paper)`
   text-align: center;
@@ -44,11 +46,15 @@ function Register() {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
+
   const onSubmit: SubmitHandler<Inputs> = (data: any) =>
     axios
       .post('/api/auth/register', data)
       .then((response: any) => console.log(response));
 
+  const { authState } = useAuthentication();
+
+  if (authState === 'loggedIn') return <Navigate to="/" />;
   return (
     <div>
       <img

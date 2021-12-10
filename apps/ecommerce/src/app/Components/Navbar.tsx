@@ -9,6 +9,8 @@ import {
 } from '@mui/icons-material';
 import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import { useAuthentication } from '../UseAuthentication/UseAuthentication';
 
 const StyledAppBar = styled(AppBar)`
   background: white;
@@ -26,6 +28,20 @@ const NavButton = styled(Button)`
 `;
 
 function Navbar() {
+  const { token } = useAuthentication();
+
+  const handleClick = () => {
+    axios
+      .post(
+        '/api/auth/logout',
+        {},
+        { headers: { Authorization: 'Bearer' + token } }
+      )
+      .then((response) => {
+        console.log(response);
+      });
+  };
+
   return (
     <div>
       <StyledAppBar
@@ -67,7 +83,7 @@ function Navbar() {
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          <IconButton edge="end" color="inherit">
+          <IconButton edge="end" color="inherit" onClick={handleClick}>
             <ExitToApp />
           </IconButton>
         </Toolbar>

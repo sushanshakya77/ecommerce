@@ -1,7 +1,11 @@
 import { Button, Link, Paper, TextField, Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import React from 'react';
+import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
+import { useRecoilState } from 'recoil';
+import { authStatus } from '../Provider/AuthAtom';
+import { useAuthentication } from '../UseAuthentication/UseAuthentication';
 
 const Container = styled(Paper)`
   text-align: center;
@@ -41,8 +45,17 @@ function Login() {
     handleSubmit,
     formState: { errors },
   } = useForm<Inputs>();
-  const onSubmit: SubmitHandler<Inputs> = (data: any) => console.log(data);
+  const navigate = useNavigate();
+  const { authState, setAuthState } = useAuthentication();
 
+  const onSubmit: SubmitHandler<Inputs> = async (data: any) => {
+    await axios.post('/api/auth/login', data).then(() => {
+      console.log('login successfull');
+      setAuthState('loggedIn');
+    });
+  };
+  if (authState === 'loggedIn') return <Navigate to="/" />;
+  // else
   return (
     <div>
       <img
