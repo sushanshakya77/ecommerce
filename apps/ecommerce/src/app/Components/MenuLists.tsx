@@ -18,7 +18,7 @@ import {
   ListItemText,
   Zoom,
 } from '@mui/material';
-import React from 'react';
+import React, { ReactNode, useMemo, useState } from 'react';
 import styled from '@emotion/styled';
 import useSWR from 'swr';
 import { Link, useNavigate } from 'react-router-dom';
@@ -36,18 +36,47 @@ interface IProducts {
 const fetcher = (...args: Parameters<typeof fetch>) =>
   fetch(...args).then((response) => response.json());
 
+interface ICategoryItem {
+  label: string;
+  icon: ReactNode;
+  width?: number;
+  onClick(): void;
+}
 function MenuLists() {
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  let navigate = useNavigate();
+  const categoryItems = useMemo<ICategoryItem[]>(
+    () => [
+      {
+        label: 'Electronics',
+        icon: <Headphones />,
+        onClick: () => navigate('/products/categories/electronics'),
+      },
+      {
+        label: 'Jewelery',
+        icon: <AttachMoney />,
+        onClick: () => navigate('/products/categories/jewelery'),
+      },
+      {
+        label: "Men's Clothing",
+        icon: <Male />,
+        width: 120,
+        onClick: () => navigate("/products/categories/men's clothing"),
+      },
+      {
+        label: "Women's Clothing",
+        icon: <Female />,
+        width: 160,
+        onClick: () => navigate("/products/categories/women's clothing"),
+      },
+    ],
+    []
+  );
 
   const handleClick = () => {
     setOpen(!open);
   };
-  const navigate = useNavigate();
 
-  const { data, error } = useSWR(`https://fakestoreapi.com/products`, fetcher);
-  console.log(data);
-  if (error) return <div>failed to load</div>;
-  if (!data) return <CircularProgress color="secondary" />;
   return (
     <div>
       <ListItemButton
@@ -77,17 +106,26 @@ function MenuLists() {
             marginTop: '10px',
             width: '100%',
           }}
-          key={data.id}
         >
-          <Zoom in={open} style={{ transitionDelay: open ? '100ms' : '0ms' }}>
-            <ListItemButton>
-              <ListItemIcon>
-                <Headphones />
-              </ListItemIcon>
-              <ListItemText primary="Electronics" />
-            </ListItemButton>
-          </Zoom>
-          <Zoom in={open} style={{ transitionDelay: open ? '250ms' : '0ms' }}>
+          {categoryItems.map((item, index) => (
+            <Zoom
+              in={open}
+              key={`${item.label}-index`}
+              style={{
+                transitionDelay: open ? `${50 + index * 200}ms` : '0ms',
+              }}
+            >
+              <ListItemButton onClick={item.onClick}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText
+                  primary={item.label}
+                  sx={{ minWidth: `${item.width ?? 0}px` }}
+                />
+              </ListItemButton>
+            </Zoom>
+          ))}
+
+          {/* <Zoom in={open} style={{ transitionDelay: open ? '250ms' : '0ms' }}>
             <ListItemButton>
               <ListItemIcon>
                 <AttachMoney />
@@ -110,10 +148,10 @@ function MenuLists() {
               </ListItemIcon>
               <ListItemText
                 primary="Women's Clothing"
-                sx={{ width: '160px' }}
+               
               />
             </ListItemButton>
-          </Zoom>
+          </Zoom> */}
         </List>
       </Collapse>
     </div>

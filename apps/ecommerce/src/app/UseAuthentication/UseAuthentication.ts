@@ -13,7 +13,7 @@ export const useAuthentication = () => {
       .then((response) => {
         console.log('this is response');
         console.log(response);
-        setToken(response.data.refreshtoken);
+        setToken(response.data.accessToken);
         setAuthState('loggedIn');
       })
       .catch(() => setAuthState('loggedOut'));

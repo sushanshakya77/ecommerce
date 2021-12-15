@@ -4,6 +4,7 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  CircularProgress,
   Grid,
   IconButton,
   Typography,
@@ -31,12 +32,19 @@ function Category() {
   );
   console.log(data);
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data) return <CircularProgress color="secondary" />;
   return (
     <div>
       <div style={{ display: 'flex' }}>
-        <Typography variant="h3" sx={{ margin: 'auto', marginTop: '20px' }}>
-          Featured Products
+        <Typography
+          variant="h3"
+          sx={{
+            margin: 'auto',
+            marginTop: '20px',
+            textTransform: 'capitalize',
+          }}
+        >
+          {category}
         </Typography>
       </div>
       <div>

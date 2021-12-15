@@ -10,7 +10,7 @@ const StyledBanner = styled(Card)`
 
 function Banner() {
   return (
-    <div style={{ marginTop: '30px' }}>
+    <div style={{ marginTop: '20px' }}>
       <StyledBanner>
         <div style={{ marginTop: '150px', marginLeft: '70px' }}>
           <Typography sx={{ fontWeight: 'bold' }}>New Clothes</Typography>

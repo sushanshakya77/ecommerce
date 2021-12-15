@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from '@emotion/styled';
 import {
   ShoppingCart,
@@ -7,10 +7,20 @@ import {
   ExitToApp,
   FavoriteBorder,
 } from '@mui/icons-material';
-import { AppBar, Button, IconButton, Toolbar, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import {
+  AppBar,
+  Badge,
+  Button,
+  Drawer,
+  IconButton,
+  Toolbar,
+  Typography,
+} from '@mui/material';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuthentication } from '../UseAuthentication/UseAuthentication';
+import Cart from './Cart';
+import { IProducts } from '../Pages/Home';
 
 const StyledAppBar = styled(AppBar)`
   background: white;
@@ -28,20 +38,35 @@ const NavButton = styled(Button)`
 `;
 
 function Navbar() {
-  const { token } = useAuthentication();
-
-  const handleClick = () => {
+  const { token, setAuthState } = useAuthentication();
+  console.log(token);
+  const navigate = useNavigate();
+  const handleLogut = () => {
     axios
       .post(
         '/api/auth/logout',
         {},
-        { headers: { Authorization: 'Bearer' + token } }
+        { headers: { Authorization: `Bearer ${token}` } }
       )
       .then((response) => {
-        console.log(response);
+        setAuthState('loggedOut');
+        navigate('/login');
       });
   };
 
+  const [open, setOpen] = useState(false);
+  const [cartItems, setCartItems] = useState([] as IProducts[]);
+  const toggleDrawer = (event: React.KeyboardEvent | React.MouseEvent) => {
+    if (
+      event.type === 'keydown' &&
+      ((event as React.KeyboardEvent).key === 'Tab' ||
+        (event as React.KeyboardEvent).key === 'Shift')
+    ) {
+      return;
+    }
+    setOpen(!open);
+  };
+  const getTotalItems = (items: IProducts[]) => null;
   return (
     <div>
       <StyledAppBar
@@ -74,16 +99,19 @@ function Navbar() {
             <NavButton variant="text">BLOG</NavButton>
           </div>
           <div style={{ flexGrow: 1 }} />
-          <IconButton color="inherit">
-            <ShoppingCart />
-          </IconButton>
+          <Badge badgeContent={getTotalItems(cartItems)} color="error">
+            <IconButton color="inherit" onClick={toggleDrawer}>
+              <ShoppingCart />
+            </IconButton>
+          </Badge>
+          <Cart open={open} toggleDrawer={toggleDrawer} />
           <IconButton color="inherit">
             <FavoriteBorder />
           </IconButton>
           <IconButton color="inherit">
             <AccountCircle />
           </IconButton>
-          <IconButton edge="end" color="inherit" onClick={handleClick}>
+          <IconButton edge="end" color="inherit" onClick={handleLogut}>
             <ExitToApp />
           </IconButton>
         </Toolbar>

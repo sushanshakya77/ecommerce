@@ -2,6 +2,7 @@ import { AddShoppingCartOutlined } from '@mui/icons-material';
 import {
   Button,
   Card,
+  CircularProgress,
   Container,
   IconButton,
   Rating,
@@ -20,9 +21,9 @@ function SingleProduct() {
     `https://fakestoreapi.com/products/${id}`,
     fetcher
   );
-  console.log(data);
+  console.log('this is singleproduct', data);
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data) return <CircularProgress color="secondary" />;
 
   return (
     <div>

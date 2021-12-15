@@ -1,4 +1,11 @@
-import { Button, Link, Paper, TextField, Typography } from '@mui/material';
+import {
+  Alert,
+  Button,
+  Link,
+  Paper,
+  TextField,
+  Typography,
+} from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import axios from 'axios';
@@ -52,6 +59,7 @@ function Login() {
     await axios.post('/api/auth/login', data).then(() => {
       console.log('login successfull');
       setAuthState('loggedIn');
+      return <Alert severity="success">This is a success message!</Alert>;
     });
   };
   if (authState === 'loggedIn') return <Navigate to="/" />;

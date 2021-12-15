@@ -6,6 +6,7 @@ import { Route, Routes } from 'react-router';
 import { BrowserRouter } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
 import Navbar from './Components/Navbar';
+import Category from './Pages/Category';
 import Home from './Pages/Home';
 import Login from './Pages/Login';
 import MainContent from './Pages/MainContent';
@@ -21,7 +22,13 @@ export function App() {
   }, [fetchAuthState]);
   // console.log(authState);
 
-  if (authState === 'uncertain') return <CircularProgress color="secondary" />;
+  if (authState === 'uncertain')
+    return (
+      <CircularProgress
+        color="secondary"
+        sx={{ marginTop: '200px', marginRight: '200px' }}
+      />
+    );
   else
     return (
       // <ThemeProvider theme={font}>
@@ -37,6 +44,7 @@ export function App() {
           }
         >
           <Route index element={<Home />} />
+          <Route path="/products/categories/:category" element={<Category />} />
           <Route path="/products/:id" element={<SingleProduct />} />
           <Route path="/shop" />
           <Route path="/shopdetails"></Route>

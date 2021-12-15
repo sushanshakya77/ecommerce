@@ -62,7 +62,7 @@ export class AuthController {
   logout(@Req() req: Request, @Res() res: Response) {
     req.session.destroy((error) => {
       if (error) {
-        console.log(error);
+        console.log('this is error', error);
         return res.send(error);
       } else return res.json('Logged Out');
     });

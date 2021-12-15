@@ -20,7 +20,7 @@ import { Link } from 'react-router-dom';
 const fetcher = (...args: Parameters<typeof fetch>) =>
   fetch(...args).then((response) => response.json());
 
-interface IProducts {
+export interface IProducts {
   id: string;
   title: string;
   price: number;
@@ -92,16 +92,6 @@ function Home() {
                     >
                       {products.title}
                     </Typography>
-                    {/* <Typography
-                    variant="body2"
-                    color="text.secondary"
-                    sx={{
-                      overflow: 'hidden',
-                      textOverflow: 'ellipsis',
-                    }}
-                  >
-                    {products.description}
-                  </Typography> */}
                     <Typography variant="h6" color="text.secondary">
                       Price: ${products.price}
                     </Typography>
