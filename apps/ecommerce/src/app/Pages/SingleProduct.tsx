@@ -15,7 +15,7 @@ import useSWR from 'swr';
 const fetcher = (...args: Parameters<typeof fetch>) =>
   fetch(...args).then((response) => response.json());
 
-function SingleProduct() {
+const SingleProduct = () => {
   const { id } = useParams();
   const { data, error } = useSWR(
     `https://fakestoreapi.com/products/${id}`,
@@ -66,6 +66,6 @@ function SingleProduct() {
       </Container>
     </div>
   );
-}
+};
 
 export default SingleProduct;

@@ -11,8 +11,6 @@ import {
   Rating,
   Typography,
 } from '@mui/material';
-import styled from '@emotion/styled';
-import React from 'react';
 import useSWR from 'swr';
 import Banner from '../Components/Banner';
 import { Link } from 'react-router-dom';
@@ -30,7 +28,7 @@ export interface IProducts {
   rating: any;
 }
 
-function Home() {
+const Home = ({ handleAddToCart }: any) => {
   const { data, error } = useSWR('https://fakestoreapi.com/products', fetcher);
   console.log(data);
   if (error) return <div>failed to load</div>;
@@ -112,7 +110,10 @@ function Home() {
                   <IconButton size="small">
                     <FavoriteBorder />
                   </IconButton>
-                  <IconButton size="small">
+                  <IconButton
+                    size="small"
+                    onClick={() => handleAddToCart(products)}
+                  >
                     <AddShoppingCart />
                   </IconButton>
                   <div style={{ flexGrow: 1 }} />
@@ -127,6 +128,6 @@ function Home() {
       </div>
     </div>
   );
-}
+};
 
 export default Home;

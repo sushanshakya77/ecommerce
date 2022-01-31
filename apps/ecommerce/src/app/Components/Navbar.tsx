@@ -19,7 +19,7 @@ import {
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuthentication } from '../UseAuthentication/UseAuthentication';
-import Cart from './Cart';
+// import Cart from './Cart';
 import { IProducts } from '../Pages/Home';
 
 const StyledAppBar = styled(AppBar)`
@@ -66,7 +66,7 @@ function Navbar() {
     }
     setOpen(!open);
   };
-  const getTotalItems = (items: IProducts[]) => null;
+
   return (
     <div>
       <StyledAppBar
@@ -99,12 +99,12 @@ function Navbar() {
             <NavButton variant="text">BLOG</NavButton>
           </div>
           <div style={{ flexGrow: 1 }} />
-          <Badge badgeContent={getTotalItems(cartItems)} color="error">
+          <Badge badgeContent={4} color="error">
             <IconButton color="inherit" onClick={toggleDrawer}>
               <ShoppingCart />
             </IconButton>
           </Badge>
-          <Cart open={open} toggleDrawer={toggleDrawer} />
+          {/* <Cart open={open} toggleDrawer={toggleDrawer} /> */}
           <IconButton color="inherit">
             <FavoriteBorder />
           </IconButton>
