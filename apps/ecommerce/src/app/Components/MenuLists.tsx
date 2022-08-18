@@ -104,7 +104,7 @@ function MenuLists() {
           sx={{
             display: 'flex',
             marginTop: '10px',
-            width: '100%',
+            width: '250%',
           }}
         >
           {categoryItems.map((item, index) => (

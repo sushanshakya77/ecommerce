@@ -1,19 +1,15 @@
-import { RtStrategy } from './strategies/rt.strategy';
 import {
   BadRequestException,
   Body,
   Controller,
-  Get,
   Post,
   Req,
   Res,
-  Session,
   UseGuards,
 } from '@nestjs/common';
-import { AuthService } from './auth.service';
-import { Request, Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
-import { JwtAuthGuard } from './guards/jwt.guard';
+import { Request, Response } from 'express';
+import { AuthService } from './auth.service';
 
 type IUser = {
   username: string;
@@ -54,7 +50,7 @@ export class AuthController {
     // console.log(user);
     // console.log(refreshtoken);
 
-    return this.authService.refreshToken(user.username, refreshtoken);
+    return this.authService.refreshToken(user.username);
   }
 
   @UseGuards(AuthGuard('jwt-access'))

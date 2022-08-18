@@ -20,7 +20,7 @@
     "@nestjs/mongoose": "^9.0.1",
     "@nestjs/passport": "^8.0.1",
     "@nestjs/platform-express": "^8.0.0",
-    "@nestjs/typeorm": "^8.0.2",
+    "@nestjs/typeorm": "^8.1.2",
     "@types/express-session": "^1.17.4",
     "@types/passport-jwt": "^3.0.6",
     "argon2": "^0.28.3",
@@ -43,7 +43,7 @@
     "rxjs": "^7.0.0",
     "swr": "^1.1.0",
     "tslib": "^2.0.0",
-    "typeorm": "^0.2.41"
+    "typeorm": "^0.3.6"
   },
   "devDependencies": {
     "@emotion/babel-plugin": "11.3.0",
